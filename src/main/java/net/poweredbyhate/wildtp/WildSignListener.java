@@ -46,6 +46,7 @@ public class WildSignListener implements Listener {
     @EventHandler
     private void onClick(PlayerInteractEvent ev) {
         if (ev.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (ev.getClickedBlock() == null) return;
 
         Player bob = ev.getPlayer();
         if (!bob.hasPermission("wild.wildtp.sign")) return;
@@ -116,10 +117,8 @@ public class WildSignListener implements Listener {
     }
 
     private String moneyOrNuttin(World direStr8) {
-        int moneypenny = kim
-                .thugz
-                .get(direStr8.getName())
-                .cost;
+        WorldConfig cfg = kim.thugz.get(direStr8.getName());
+        int moneypenny = (cfg == null) ? 0 : cfg.cost;
         return (moneypenny == 0) ? kim.bluredLines[4] : kim.bluredLines[5].replace("%COST%", "" + moneypenny);
     }
 
